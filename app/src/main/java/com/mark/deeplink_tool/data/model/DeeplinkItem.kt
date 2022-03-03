@@ -1,11 +1,17 @@
 package com.mark.deeplink_tool.data.model
 
 import androidx.compose.ui.graphics.Color
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.mark.deeplink_tool.ui.util.Constant
 
 
+@Entity(tableName = "deeplink")
 data class DeeplinkItem(
-    val name: String,
-    val scheme: String,
-    val path: String = "debug",
-    val imageGradient: List<Color> = listOf()
+    @PrimaryKey(autoGenerate = true) var id: Int,
+    @ColumnInfo(name = "name") val name: String?,
+    @ColumnInfo(name = "scheme") val scheme: String?,
+    @ColumnInfo(name = "path") val path: String = "debug",
+    @ColumnInfo(name = "imageGradient") val imageGradient: List<Color> = Constant.GRADIENT_MEGATRON
 )

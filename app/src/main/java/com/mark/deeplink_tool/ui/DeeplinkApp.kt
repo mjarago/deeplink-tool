@@ -15,12 +15,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -36,24 +36,38 @@ import com.mark.deeplink_tool.ui.components.DeeplinkSnackbar
 import com.mark.deeplink_tool.ui.theme.DeeplinktoolTheme
 import com.mark.deeplink_tool.ui.util.SampleData
 import com.mark.deeplink_tool.R
+import com.mark.deeplink_tool.viewmodel.DeeplinkViewModel
 import java.lang.Exception
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mark.deeplink_tool.data.model.DeeplinkItem
 
 
 @Composable
-fun DeeplinkApp() {
+fun DeeplinkApp(deeplinkViewModel: DeeplinkViewModel) {
+    val deeplinks by deeplinkViewModel.deeplinks.collectAsState()
+
     DeeplinktoolTheme {
         ProvideWindowInsets {
             Scaffold(
                 modifier = Modifier.statusBarsPadding(),
                 topBar = { DeeplinkTopBar() },
-                floatingActionButton = { DeeplinkFab(onClick = {/* TODO */ }) },
+                floatingActionButton = {
+                    DeeplinkFab(onClick = {
+                        deeplinkViewModel.insertDeeplink(
+                            SampleData.getRandomItem()
+                        )
+                    })
+                },
                 snackbarHost = {
                     SnackbarHost(
                         hostState = it,
                         snackbar = { snackbarData -> DeeplinkSnackbar(snackbarData) })
                 }
             ) { innerPaddingModifier ->
-                DeeplinkContent(modifier = Modifier.padding(innerPaddingModifier))
+                DeeplinkContent(
+                    modifier = Modifier.padding(innerPaddingModifier),
+                    deeplinkList = deeplinks
+                )
             }
         }
     }
@@ -96,9 +110,11 @@ fun DeeplinkFab(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DeeplinkContent(modifier: Modifier = Modifier) {
+fun DeeplinkContent(
+    modifier: Modifier = Modifier,
+    deeplinkList: List<DeeplinkItem> = SampleData.deeplinkList
+) {
     val context = LocalContext.current
-    val deeplinkList = SampleData.deeplinkList
     LazyColumn {
         items(deeplinkList) { deeplink ->
             val schemeWithPath = deeplink.scheme + ":///" + deeplink.path

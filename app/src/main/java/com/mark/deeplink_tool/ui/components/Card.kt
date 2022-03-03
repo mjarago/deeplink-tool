@@ -56,7 +56,7 @@ fun DeeplinkCard(
 fun DeeplinkCardContent(
     deeplink: DeeplinkItem
 ) {
-    var isEditing by remember { mutableStateOf(true) }
+    var isEditing by remember { mutableStateOf(false) }
     Column {
         Row(
             verticalAlignment = CenterVertically,
@@ -66,7 +66,7 @@ fun DeeplinkCardContent(
                 .padding(8.dp)
         ) {
             LetterImage(
-                letter = deeplink.name.first().toString().uppercase(),
+                letter = deeplink.name?.first().toString().uppercase(),
                 gradient = deeplink.imageGradient
             )
             Column(
@@ -74,7 +74,7 @@ fun DeeplinkCardContent(
                     .padding(8.dp)
             ) {
 
-                Text(text = deeplink.name, style = MaterialTheme.typography.h6)
+                deeplink.name?.let { Text(text = it, style = MaterialTheme.typography.h6) }
 
                 /*TODO style this surface and fix overall layout*/
                 Surface() {
@@ -163,7 +163,7 @@ fun LetterImage(letter: String = "?", gradient: List<Color> = Constant.GRADIENT_
 @Preview(showBackground = true)
 @Composable
 fun DeeplinkCardPreview() {
-    val test = DeeplinkItem("JEC", "ebjec", "debug", Constant.GRADIENT_MEGATRON)
+    val test = DeeplinkItem(1, "JEC", "ebjec", "debug", Constant.GRADIENT_MEGATRON)
 
     DeeplinkCard(onClick = { /*TODO*/ }, shape = RoundedCornerShape(14.dp)) {
         DeeplinkCardContent(test)

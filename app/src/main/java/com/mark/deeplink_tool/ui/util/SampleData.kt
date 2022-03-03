@@ -6,12 +6,51 @@ import com.mark.deeplink_tool.data.model.DeeplinkItem
 open class SampleData {
     companion object {
         val deeplinkList = mutableListOf<DeeplinkItem>(
-            DeeplinkItem("JEC", "ebjec", "debug", Constant.GRADIENT_MEGATRON),
-            DeeplinkItem("JEC Schedule", "ebjec", "schedulev2", Constant.GRADIENT_JSHINE),
-            DeeplinkItem("AAN", "aanconf", "debug", Constant.GRADIENT_ULTRA_VIOLET               ),
-            DeeplinkItem("Schedule", "aanconf", "schedulev2", Constant.GRADIENT_EVENING_NIGHT),
-            DeeplinkItem("Notifications", "aanconf", "richpush", Constant.GRADIENT_SUNKIST)
+            DeeplinkItem(
+                id = 1,
+                name = "JEC",
+                scheme = "ebjec",
+                path = "debug",
+                imageGradient = Constant.GRADIENT_MEGATRON
+            ),
+            DeeplinkItem(
+                id = 2,
+                name = "JEC Schedule",
+                scheme = "ebjec",
+                path = "schedulev2",
+                imageGradient = Constant.GRADIENT_JSHINE
+            ),
+            DeeplinkItem(
+                id = 3,
+                name = "AAN",
+                scheme = "aanconf",
+                path = "debug",
+                imageGradient = Constant.GRADIENT_ULTRA_VIOLET
+            ),
+            DeeplinkItem(
+                id = 4,
+                name = "Schedule",
+                scheme = "aanconf",
+                path = "schedulev2",
+                imageGradient = Constant.GRADIENT_EVENING_NIGHT
+            ),
+            DeeplinkItem(
+                id = 5,
+                name = "Notifications",
+                scheme = "aanconf",
+                path = "richpush",
+                imageGradient = Constant.GRADIENT_SUNKIST
+            )
         )
+
+        fun getRandomItem(): DeeplinkItem {
+            val item = deeplinkList.random()
+            item.id = getRandomId()
+            return item
+        }
+
+        fun getRandomId(): Int = (0..Int.MAX_VALUE).random()
     }
+
 }
 
