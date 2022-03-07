@@ -12,7 +12,6 @@ import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,7 +31,7 @@ import com.mark.deeplink_tool.ui.util.Constant
 
 
 @Composable
-fun DeeplinkCard(
+fun Card(
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.medium,
     onClick: () -> Unit,
@@ -52,90 +51,7 @@ fun DeeplinkCard(
     }
 }
 
-@Composable
-fun DeeplinkCardContent(
-    deeplink: DeeplinkItem
-) {
-    var isEditing by remember { mutableStateOf(false) }
-    Column {
-        Row(
-            verticalAlignment = CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            LetterImage(
-                letter = deeplink.name?.first().toString().uppercase(),
-                gradient = deeplink.imageGradient
-            )
-            Column(
-                modifier = Modifier
-                    .padding(8.dp)
-            ) {
 
-                deeplink.name?.let { Text(text = it, style = MaterialTheme.typography.h6) }
-
-                /*TODO style this surface and fix overall layout*/
-                Surface() {
-                    Text(
-                        text = "${deeplink.scheme}:///${deeplink.path}",
-                        style = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Light)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            IconButton(
-                modifier = Modifier.requiredWidth(48.dp),
-                onClick = { isEditing = !isEditing }
-            ) {
-                Icon(
-                    imageVector = if (isEditing) Icons.Outlined.Close else Icons.Outlined.Edit,
-                    contentDescription = "Edit Deeplink",
-                    modifier = Modifier.diagonalGradientTint(
-                        colors = deeplink.imageGradient,
-                        blendMode = BlendMode.Plus
-                    )
-                )
-            }
-        }
-        var text by remember {
-            mutableStateOf("")
-        }
-        AnimatedVisibility(isEditing) {
-
-            Column(
-                horizontalAlignment = CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                OutlinedTextField(
-                    value = text,
-                    onValueChange = { text = it },
-                    label = { Text("Name") })
-                OutlinedTextField(
-                    value = text,
-                    onValueChange = { text = it },
-                    label = { Text("App Url Scheme") })
-                OutlinedTextField(
-                    value = text,
-                    onValueChange = { text = it },
-                    label = { Text("Link (e.g. debug)") })
-                Divider(
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp, vertical = 4.dp), thickness = 2.dp
-                )
-                OutlinedButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier.align(CenterHorizontally).width(120.dp)
-                ) {
-                    Text(text = "Save")
-                }
-
-            }
-        }
-    }
-}
 
 @Composable
 fun LetterImage(letter: String = "?", gradient: List<Color> = Constant.GRADIENT_MEGATRON) {
@@ -163,9 +79,6 @@ fun LetterImage(letter: String = "?", gradient: List<Color> = Constant.GRADIENT_
 @Preview(showBackground = true)
 @Composable
 fun DeeplinkCardPreview() {
-    val test = DeeplinkItem(1, "JEC", "ebjec", "debug", Constant.GRADIENT_MEGATRON)
-
-    DeeplinkCard(onClick = { /*TODO*/ }, shape = RoundedCornerShape(14.dp)) {
-        DeeplinkCardContent(test)
+    Card(onClick = { /*TODO*/ }) {
     }
 }

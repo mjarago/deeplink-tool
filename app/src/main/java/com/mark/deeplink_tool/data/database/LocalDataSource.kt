@@ -1,13 +1,12 @@
-package com.mark.deeplink_tool.data
+package com.mark.deeplink_tool.data.database
 
-import com.mark.deeplink_tool.data.database.DeeplinkItemDao
 import com.mark.deeplink_tool.data.model.DeeplinkItem
 import kotlinx.coroutines.flow.Flow
 
 class LocalDataSource(
-    private val deeplinkItemDao: DeeplinkItemDao
+    private val deeplinkItemDao: DeeplinkItemDao 
 ) {
-    suspend fun getAllDeeplinks(): Flow<List<DeeplinkItem>> {
+    fun getAllDeeplinks(): Flow<List<DeeplinkItem>> {
         return deeplinkItemDao.getAllDeeplinks()
     }
 

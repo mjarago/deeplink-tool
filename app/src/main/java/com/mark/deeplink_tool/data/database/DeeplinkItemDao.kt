@@ -14,6 +14,4 @@ interface DeeplinkItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDeeplink(deeplinkItem: DeeplinkItem)
 
-    @Update
-    suspend fun updateDeeplink(deeplinkItem: DeeplinkItem)
 }

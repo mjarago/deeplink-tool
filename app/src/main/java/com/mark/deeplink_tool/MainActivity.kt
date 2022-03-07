@@ -4,16 +4,13 @@ package com.mark.deeplink_tool
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.compose.runtime.collectAsState
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mark.deeplink_tool.data.LocalDataSource
+import com.mark.deeplink_tool.data.database.LocalDataSource
 import com.mark.deeplink_tool.data.database.DeeplinkDatabase
 import com.mark.deeplink_tool.data.repository.DeeplinkRepository
 import com.mark.deeplink_tool.ui.DeeplinkApp
-import com.mark.deeplink_tool.viewmodel.DeeplinkViewModel
+import com.mark.deeplink_tool.ui.viewmodel.DeeplinkViewModel
 
 class MainActivity : ComponentActivity() {
     lateinit var deeplinkViewModel: DeeplinkViewModel

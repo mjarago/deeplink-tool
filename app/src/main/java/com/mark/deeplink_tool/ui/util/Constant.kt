@@ -36,5 +36,13 @@ class Constant {
         val GRADIENT_ULTRA_VIOLET = listOf(ultraViolet1, ultraViolet2)
         val GRADIENT_EVENING_NIGHT = listOf(evening1, evening2)
         val GRADIENT_SUNKIST = listOf(sunkist1, sunkist2)
+
+        val GRADIENT_LIST = listOf(
+            GRADIENT_MEGATRON,
+            GRADIENT_JSHINE,
+            GRADIENT_ULTRA_VIOLET,
+            GRADIENT_EVENING_NIGHT,
+            GRADIENT_SUNKIST
+        )
     }
 }
