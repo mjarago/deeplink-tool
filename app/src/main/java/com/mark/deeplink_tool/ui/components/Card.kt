@@ -1,22 +1,15 @@
 package com.mark.deeplink_tool.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
@@ -26,8 +19,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import com.mark.deeplink_tool.data.model.DeeplinkItem
-import com.mark.deeplink_tool.ui.util.Constant
+import com.mark.deeplink_tool.util.GradientUtil
 
 
 @Composable
@@ -54,7 +46,7 @@ fun Card(
 
 
 @Composable
-fun LetterImage(letter: String = "?", gradient: List<Color> = Constant.GRADIENT_MEGATRON) {
+fun LetterImage(letter: String = "?", gradient: List<Color> = GradientUtil.GRADIENT_MEGATRON) {
     Box(
         modifier = Modifier
             .size(48.dp)
@@ -79,6 +71,6 @@ fun LetterImage(letter: String = "?", gradient: List<Color> = Constant.GRADIENT_
 @Preview(showBackground = true)
 @Composable
 fun DeeplinkCardPreview() {
-    Card(onClick = { /*TODO*/ }) {
+    Card(onClick = {}) {
     }
 }

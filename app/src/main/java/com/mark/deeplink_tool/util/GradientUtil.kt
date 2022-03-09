@@ -1,13 +1,12 @@
-package com.mark.deeplink_tool.ui.util
+package com.mark.deeplink_tool.util
 
 import androidx.compose.ui.graphics.Color
 
-class Constant {
+class GradientUtil {
     companion object {
         /**
          * https://uigradients.com/
          *
-         * TODO:
          */
         // Megatron
         val megatron1 = Color(0xffc6ffdd)
@@ -31,18 +30,31 @@ class Constant {
         val sunkist1 = Color(0xfff2994a)
         val sunkist2 = Color(0xfff2c94c)
 
+        val expresso1 = Color(0xffad5389)
+        val expresso2 = Color(0xff3c1053)
+
+        val blackRose1 = Color(0xffad5389)
+        val blacRose2    = Color(0xff3c1053)
+
         val GRADIENT_MEGATRON = listOf(megatron1, megatron2, megatron3)
         val GRADIENT_JSHINE = listOf(jshine1, jshine2, jshine3)
         val GRADIENT_ULTRA_VIOLET = listOf(ultraViolet1, ultraViolet2)
         val GRADIENT_EVENING_NIGHT = listOf(evening1, evening2)
         val GRADIENT_SUNKIST = listOf(sunkist1, sunkist2)
+        val GRADIENT_EXPRESSO = listOf(expresso1, expresso2)
+        val GRADIENT_BLACK_ROSE = listOf(blackRose1, blacRose2)
 
         val GRADIENT_LIST = listOf(
             GRADIENT_MEGATRON,
             GRADIENT_JSHINE,
             GRADIENT_ULTRA_VIOLET,
             GRADIENT_EVENING_NIGHT,
-            GRADIENT_SUNKIST
+            GRADIENT_SUNKIST,
+            GRADIENT_EXPRESSO,
+            GRADIENT_BLACK_ROSE
         )
+
+        var randomGradient: List<Color> = GRADIENT_LIST.random()
     }
+
 }

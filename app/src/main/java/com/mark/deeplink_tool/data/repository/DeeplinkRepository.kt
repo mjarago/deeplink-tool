@@ -15,4 +15,8 @@ class DeeplinkRepository(
     suspend fun insertDeeplink(deeplinkItem: DeeplinkItem) {
         localDataSource.insertDeeplink(deeplinkItem)
     }
+
+    suspend fun deleteAll() {
+        localDataSource.deleteAll()
+    }
 }

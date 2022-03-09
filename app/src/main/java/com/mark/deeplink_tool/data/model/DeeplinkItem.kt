@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mark.deeplink_tool.ui.util.Constant
+import com.mark.deeplink_tool.util.GradientUtil
 
 
 @Entity(tableName = "deeplink")
@@ -13,5 +13,5 @@ data class DeeplinkItem(
     @ColumnInfo(name = "name") val name: String?,
     @ColumnInfo(name = "scheme") val scheme: String,
     @ColumnInfo(name = "path") val path: String = "debug",
-    @ColumnInfo(name = "imageGradient") val imageGradient: List<Color> = Constant.GRADIENT_MEGATRON
+    @ColumnInfo(name = "imageGradient") val imageGradient: List<Color>? = null
 )

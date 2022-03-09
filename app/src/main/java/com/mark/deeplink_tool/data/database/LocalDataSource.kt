@@ -13,4 +13,8 @@ class LocalDataSource(
     suspend fun insertDeeplink(deeplinkItem: DeeplinkItem) {
         deeplinkItemDao.insertDeeplink(deeplinkItem)
     }
+
+    suspend fun deleteAll() {
+        deeplinkItemDao.deleteAll()
+    }
 }

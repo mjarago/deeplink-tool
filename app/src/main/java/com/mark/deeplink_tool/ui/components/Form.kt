@@ -1,43 +1,94 @@
 package com.mark.deeplink_tool.ui.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Divider
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mark.deeplink_tool.data.model.DeeplinkItem
-import kotlinx.coroutines.flow.SharingStarted
 
+/**
+ * Entry Point for editing a [DeeplinkItem]
+ */
 @Composable
 fun DeeplinkItemEntryInput(
+    name: String,
     onNameChange: (String) -> Unit,
+    scheme: String,
     onSchemeChange: (String) -> Unit,
+    path: String,
     onPathChange: (String) -> Unit,
     currentEditItem: DeeplinkItem,
-    onSubmit: (DeeplinkItem) -> Unit
+    onSubmit: (DeeplinkItem) -> Unit,
+    onEditDone: () -> Unit,
+    errorMessage: String?
 ) {
-
     val submit = {
-        onSubmit(currentEditItem)
+        onSubmit(
+            DeeplinkItem(
+                currentEditItem.id,
+                name,
+                scheme,
+                path,
+                currentEditItem.imageGradient
+            )
+        )
     }
 
     InputForm(
-        name = currentEditItem.name!!,
+        name = name,
         onNameChange = onNameChange,
-        scheme = currentEditItem.scheme,
+        scheme = scheme,
         onSchemeChange = onSchemeChange,
-        path = currentEditItem.path,
+        path = path,
         onPathChange = onPathChange,
-        onSubmit = submit
+        errorMessage = errorMessage,
+        onSubmit = submit,
+        onDismiss = onEditDone
+    )
+
+}
+
+/**
+ * Entry point for creating *new* [DeeplinkItem]
+ */
+@Composable
+fun DeeplinkItemNewEntryInput(
+    name: String,
+    onNameChange: (String) -> Unit,
+    scheme: String,
+    onSchemeChange: (String) -> Unit,
+    path: String,
+    onPathChange: (String) -> Unit,
+    onSubmit: (DeeplinkItem) -> Unit,
+    onDismiss: () -> Unit,
+    errorMessage: String?,
+    imageGradient: List<Color>? = null
+) {
+    val submit = {
+        onSubmit(
+            DeeplinkItem(
+                name = name,
+                scheme = scheme,
+                path = path,
+                imageGradient = imageGradient
+            )
+        )
+    }
+
+    InputForm(
+        name = name,
+        onNameChange = onNameChange,
+        scheme = scheme,
+        onSchemeChange = onSchemeChange,
+        path = path,
+        onPathChange = onPathChange,
+        errorMessage = errorMessage,
+        onSubmit = submit,
+        onDismiss = onDismiss
     )
 
 }
@@ -51,48 +102,60 @@ fun InputForm(
     onSchemeChange: (String) -> Unit,
     path: String,
     onPathChange: (String) -> Unit,
-    onSubmit: () -> Unit
+    errorMessage: String? = null,
+    onSubmit: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     Column(
         horizontalAlignment = CenterHorizontally,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
     ) {
         DeeplinkTextField(
-            modifier = modifier,
             text = name,
             onTextChange = onNameChange,
             label = "Name",
-            placeholder = "Input Name"
+            placeholder = "Enter Name"
         )
 
         DeeplinkTextField(
-            modifier = modifier,
             text = scheme,
             onTextChange = onSchemeChange,
             label = "Scheme",
-            placeholder = "Enter App Url Scheme"
+            placeholder = "Enter App Url Scheme",
+            errorMessage = errorMessage
         )
 
         DeeplinkTextField(
-            modifier = modifier,
             text = path,
             onTextChange = onPathChange,
             label = "Deeplink",
-            placeholder = "Input Deeplink (Default: Debug)"
+            placeholder = "Enter Deeplink (Default: Debug)"
         )
 
         Divider(
             modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 4.dp), thickness = 2.dp
+                .padding(top = 8.dp, start = 32.dp, end = 32.dp)
         )
-        OutlinedButton(
-            onClick = onSubmit,
-            modifier = Modifier
-                .align(CenterHorizontally)
-                .width(120.dp)
-        ) {
-            Text(text = "Save")
+        Box(Modifier.align(CenterHorizontally)) {
+            Row {
+                OutlinedButton(
+                    onClick = onSubmit,
+                    modifier = Modifier
+                        .width(120.dp)
+                ) {
+                    Text(text = "Save")
+                }
+                Spacer(modifier = Modifier.padding(4.dp))
+                OutlinedButton(
+                    onClick = onDismiss,
+                    modifier = Modifier
+                        .width(120.dp)
+                ) {
+                    Text(text = "Dismiss")
+                }
+
+            }
         }
     }
 
@@ -104,14 +167,42 @@ fun DeeplinkTextField(
     text: String,
     onTextChange: (String) -> Unit,
     label: String,
-    placeholder: String = ""
+    placeholder: String = "",
+    errorMessage: String? = null
 ) {
-    OutlinedTextField(
-        modifier = modifier,
-        value = text,
-        onValueChange = { onTextChange(it) },
-        label = { Text(label) },
-        placeholder = { Text(placeholder) }
+    val isError = !errorMessage.isNullOrEmpty()
+    Column {
+        OutlinedTextField(
+            modifier = modifier,
+            value = text,
+            onValueChange = { onTextChange(it) },
+            label = { Text(label) },
+            placeholder = { Text(placeholder) },
+            isError = isError
+        )
+        if (isError) {
+            errorMessage?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.caption,
+                    color = MaterialTheme.colors.error
+                )
+            }
+        }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun InputFormPreview() {
+    InputForm(
+        name = "",
+        onNameChange = {},
+        scheme = "",
+        onSchemeChange = {},
+        path = "",
+        onPathChange = {},
+        onDismiss = {},
+        onSubmit = {}
     )
 }
 
